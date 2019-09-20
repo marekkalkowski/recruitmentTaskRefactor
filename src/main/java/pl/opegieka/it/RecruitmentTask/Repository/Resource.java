@@ -12,7 +12,39 @@ public class Resource {
     @Column(name = "id")
     private int resourceId;
 
-    @Column(name = "resurce_name")
+    @Column(name = "resource_name",unique = true)
     @NotNull
     private String resourceName;
+
+    public Resource() {
+    }
+
+    public Resource(@NotNull String resourceName) {
+        this.resourceName = resourceName;
+    }
+
+    public int getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Resource{");
+        sb.append("resourceId=").append(resourceId);
+        sb.append(", resourceName='").append(resourceName).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

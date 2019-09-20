@@ -2,7 +2,7 @@ package pl.opegieka.it.RecruitmentTask.Repository;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "CARDS")
@@ -14,17 +14,17 @@ public class Card {
     private int cardId;
 
     @NotNull
-    @Column(name = "card_number")
+    @Column(name = "card_number",unique = true)
     private int cardNumber;
 
     @NotNull
     @Column()
-    private LocalDateTime expireDate;
+    private LocalDate expireDate;
 
     public Card() {
     }
 
-    public Card(@NotNull int cardNumber, @NotNull LocalDateTime expireDate) {
+    public Card(@NotNull int cardNumber, @NotNull LocalDate expireDate) {
         this.cardNumber = cardNumber;
         this.expireDate = expireDate;
     }
@@ -45,11 +45,11 @@ public class Card {
         this.cardNumber = cardNumber;
     }
 
-    public LocalDateTime getExpireDate() {
+    public LocalDate getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(LocalDateTime expireDate) {
+    public void setExpireDate(LocalDate expireDate) {
         this.expireDate = expireDate;
     }
 
