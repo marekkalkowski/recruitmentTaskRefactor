@@ -16,7 +16,7 @@
     <Loggers>
         <Root level="info">
             <!--      <AppenderRef ref="Console" level="ALL" />-->
-            <AppenderRef ref="Async" level="INFO"/>
+            <AppenderRef ref="Async" level="DEBUG"/>
         </Root>
     </Loggers>
 </Configuration>
