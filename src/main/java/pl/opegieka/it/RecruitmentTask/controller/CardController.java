@@ -30,11 +30,13 @@ public class CardController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Card> getAllCards() {
+        LOG.info("Zapytanie GET do /api/cards; metoda getAllCards ");
         return cardDao.findAll();
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public Card addCard(@RequestBody Card card) {
+        LOG.info("Zapytanie POST do /api/cards; metoda addCard ");
 
         checkCardNumberLenght(card);
 
@@ -43,9 +45,10 @@ public class CardController {
             throw new AllreadyExistException(String.format("Card with nuber %s already exist", cardNumber));
         }
 
-        long id = cardDao.save(card);
+        cardDao.save(card);
 
-        return cardDao.findById(id);
+        LOG.info("Zapisano nową kartę" + card);
+        return card;
 
     }
 

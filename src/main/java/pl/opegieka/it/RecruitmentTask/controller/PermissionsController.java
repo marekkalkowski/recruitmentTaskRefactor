@@ -1,10 +1,10 @@
 package pl.opegieka.it.RecruitmentTask.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.opegieka.it.RecruitmentTask.Model.Card;
-import pl.opegieka.it.RecruitmentTask.Model.PermissionGroup;
-import pl.opegieka.it.RecruitmentTask.Model.Resource;
+import pl.opegieka.it.RecruitmentTask.Model.*;
 import pl.opegieka.it.RecruitmentTask.dao.*;
 import pl.opegieka.it.RecruitmentTask.exception.NotFoundException;
 import pl.opegieka.it.RecruitmentTask.service.RegexService;
@@ -14,6 +14,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/permissions")
 public class PermissionsController {
+
+    public static final Logger LOG = LogManager.getLogger(PermissionsController.class);
 
     @Autowired
     private CardToResourceDao cardToResourceDao;
@@ -39,9 +41,13 @@ public class PermissionsController {
     @Autowired
     private Resource resource;
 
+    @Autowired
+    PermissionDTO permissionDTO;
+
+
 
     @GetMapping
-    public String checkPermission(@RequestParam(value = "cardNumber") String cardNumber,
+    public PermissionDTO checkPermission(@RequestParam(value = "cardNumber") String cardNumber,
                                   @RequestParam(value = "resourceName") String resourceName) {
 
         checkNumberFormat(cardNumber, "Card id must be integer!");
@@ -49,13 +55,36 @@ public class PermissionsController {
         int checkedCardNumber = Integer.valueOf(cardNumber);
         card = cardDao.findByCardNumber(checkedCardNumber);
 
-        List<PermissionGroup> groupList = card.getPermissionGroupList();
+        LOG.debug("test");
+        List<PermissionGroup> cardGroupList = card.getPermissionGroupList();
+        List<Resource> cardResourceList = card.getResourceList();
 
         if (resourceDao.checkIfExist(resourceName) == 0) {
             throw new NotFoundException("Resource not found");
         }
 
-        return card.toString();
+        resource = resourceDao.findByName(resourceName);
+
+        boolean checkCardGroupInResource = false;
+
+        for (PermissionGroup group: cardGroupList
+             ) {
+                    if (resource.getPermissionGroupList().contains(group)){
+                        checkCardGroupInResource = true;
+                        break;
+
+                    }else {checkCardGroupInResource  = false;}
+
+        }
+        PermissionDTO permissionDTO;
+
+        if (cardResourceList.contains(resource) || checkCardGroupInResource){
+            permissionDTO = new PermissionDTO(checkedCardNumber,resourceName, PermissionStatus.GRANTED);
+        }else{
+            permissionDTO = new PermissionDTO(checkedCardNumber,resourceName,PermissionStatus.DENIED);
+        }
+
+        return permissionDTO;
     }
 
     private void checkNumberFormat(String id, String s) {

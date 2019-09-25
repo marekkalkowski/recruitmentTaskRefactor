@@ -33,7 +33,7 @@ public class CardToResourceController {
     @Autowired
     private RegexService regexService;
 
-    @PostMapping(value = "/cardtoresource/{cardId}/{resourceId}",
+    @PostMapping(value = "{cardId}/{resourceId}",
             produces = {"application/json"})
     public CardToResourceDTO addCardToResource(@PathVariable("cardId") String cardId,
                                                @PathVariable("resourceId") String resourceId) {
@@ -66,7 +66,7 @@ public class CardToResourceController {
         return cardToResourceDTO;
     }
 
-    @DeleteMapping(value = "/cardtoresource/{cardId}/{resourceId}",
+    @DeleteMapping(value = "/{cardId}/{resourceId}",
             produces = {"application/json"})
     public String deleteCardFromResource(@PathVariable("cardId") String cardId,
                                       @PathVariable("resourceId") String resourceId) {

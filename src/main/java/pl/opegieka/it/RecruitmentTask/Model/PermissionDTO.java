@@ -5,23 +5,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class PermissionDTO {
 
-    private long cardNumber;
+    private int cardNumber;
     private String resourceName;
+    private PermissionStatus permissionStatus;
 
 
     public PermissionDTO() {
     }
 
-    public PermissionDTO(long cardNumber, String resourceName) {
+    public PermissionDTO(int cardNumber, String resourceName) {
         this.cardNumber = cardNumber;
         this.resourceName = resourceName;
+    }
+
+    public PermissionDTO(int cardNumber, String resourceName, PermissionStatus permissionStatus) {
+        this.cardNumber = cardNumber;
+        this.resourceName = resourceName;
+        this.permissionStatus = permissionStatus;
     }
 
     public long getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(long cardNumber) {
+    public void setCardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
     }
 
@@ -33,4 +40,11 @@ public class PermissionDTO {
         this.resourceName = resourceName;
     }
 
+    public PermissionStatus getPermissionStatus() {
+        return permissionStatus;
+    }
+
+    public void setPermissionStatus(PermissionStatus permissionStatus) {
+        this.permissionStatus = permissionStatus;
+    }
 }

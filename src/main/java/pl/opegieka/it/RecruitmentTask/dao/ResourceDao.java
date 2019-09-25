@@ -59,7 +59,7 @@ public class ResourceDao {
     }
 
     public Resource findByName(String name) {
-        final Query query = entityManager.createQuery("SELECT r FROM Resource r where groupName = :name");
+        final Query query = entityManager.createQuery("SELECT r FROM Resource r where resourceName = :name");
         query.setParameter("name", name);
         List<Resource> groupList = query.getResultList();
         if (groupList.size() <= 0) {

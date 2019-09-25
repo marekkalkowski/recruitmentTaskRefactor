@@ -87,8 +87,6 @@ public class Resource {
         final StringBuffer sb = new StringBuffer("Resource{");
         sb.append("resourceId=").append(resourceId);
         sb.append(", resourceName='").append(resourceName).append('\'');
-        sb.append(", cardList=").append(cardList);
-        sb.append(", permissionGroupList=").append(permissionGroupList);
         sb.append('}');
         return sb.toString();
     }
