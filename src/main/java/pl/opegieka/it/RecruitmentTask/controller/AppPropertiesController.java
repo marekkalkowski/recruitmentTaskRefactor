@@ -15,13 +15,13 @@ public class AppPropertiesController {
     private static final Logger LOG =
             LoggerFactory.getLogger(CardController.class);
 
-   @Autowired
-   AppProperties appProperties;
+    @Autowired
+    private AppProperties appProperties;
 
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public AppProperties appInfo(){
+    public AppProperties appInfo() {
         LOG.info("Zapytanie do /api/appversion. Zwracany obiekt to: " + appProperties);
-        return appProperties;
 
+        return appProperties;
     }
 }

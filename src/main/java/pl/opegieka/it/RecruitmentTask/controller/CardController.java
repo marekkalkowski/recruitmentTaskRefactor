@@ -32,7 +32,7 @@ public class CardController {
 
         List<Card> cardList = cardDao.findAll();
 
-        LOG.info("Zrócono wszystkie karty w liczbie : {} : ",cardList.size());
+        LOG.info("Zrócono wszystkie karty w liczbie : {} : ", cardList.size());
 
         return cardList;
     }

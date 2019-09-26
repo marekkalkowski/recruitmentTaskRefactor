@@ -1,12 +1,12 @@
 package pl.opegieka.it.RecruitmentTask.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @Entity
@@ -92,5 +92,21 @@ public class PermissionGroup {
         sb.append(", groupName='").append(groupName).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PermissionGroup that = (PermissionGroup) o;
+        return groupId == that.groupId &&
+                Objects.equals(groupName, that.groupName) &&
+                Objects.equals(cardList, that.cardList) &&
+                Objects.equals(resourceList, that.resourceList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupId, groupName, cardList, resourceList);
     }
 }

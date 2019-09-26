@@ -1,12 +1,12 @@
 package pl.opegieka.it.RecruitmentTask.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @Entity
@@ -39,7 +39,6 @@ public class Card {
 
     public Card(@NotNull int cardNumber) {
         this.cardNumber = cardNumber;
-
     }
 
     public long getCardId() {
@@ -57,7 +56,6 @@ public class Card {
     public void setCardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
     }
-
 
     public List<PermissionGroup> getPermissionGroupList() {
         return permissionGroupList;
@@ -94,5 +92,21 @@ public class Card {
         sb.append(", resourceList=").append(resourceList);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return cardId == card.cardId &&
+                cardNumber == card.cardNumber &&
+                Objects.equals(permissionGroupList, card.permissionGroupList) &&
+                Objects.equals(resourceList, card.resourceList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cardId, cardNumber, permissionGroupList, resourceList);
     }
 }

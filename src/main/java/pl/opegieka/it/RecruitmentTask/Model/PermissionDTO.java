@@ -9,7 +9,6 @@ public class PermissionDTO {
     private String resourceName;
     private PermissionStatus permissionStatus;
 
-
     public PermissionDTO() {
     }
 

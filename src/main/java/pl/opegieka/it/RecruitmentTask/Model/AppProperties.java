@@ -35,6 +35,4 @@ public class AppProperties {
     public void setTime(String time) {
         this.time = time;
     }
-
-
 }

@@ -3,7 +3,10 @@ package pl.opegieka.it.RecruitmentTask.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import pl.opegieka.it.RecruitmentTask.Model.*;
 import pl.opegieka.it.RecruitmentTask.dao.*;
 import pl.opegieka.it.RecruitmentTask.exception.NotFoundException;
@@ -42,13 +45,11 @@ public class PermissionsController {
     private Resource resource;
 
     @Autowired
-    PermissionDTO permissionDTO;
-
-
+    private PermissionDTO permissionDTO;
 
     @GetMapping
     public PermissionDTO checkPermission(@RequestParam(value = "cardNumber") String cardNumber,
-                                  @RequestParam(value = "resourceName") String resourceName) {
+                                         @RequestParam(value = "resourceName") String resourceName) {
 
         checkNumberFormat(cardNumber, "Card id must be integer!");
 
@@ -67,21 +68,22 @@ public class PermissionsController {
 
         boolean checkCardGroupInResource = false;
 
-        for (PermissionGroup group: cardGroupList
-             ) {
-                    if (resource.getPermissionGroupList().contains(group)){
-                        checkCardGroupInResource = true;
-                        break;
+        for (PermissionGroup group : cardGroupList
+        ) {
+            if (resource.getPermissionGroupList().contains(group)) {
+                checkCardGroupInResource = true;
+                break;
 
-                    }else {checkCardGroupInResource  = false;}
+            } else {
+                checkCardGroupInResource = false;
+            }
 
         }
-        PermissionDTO permissionDTO;
 
-        if (cardResourceList.contains(resource) || checkCardGroupInResource){
-            permissionDTO = new PermissionDTO(checkedCardNumber,resourceName, PermissionStatus.GRANTED);
-        }else{
-            permissionDTO = new PermissionDTO(checkedCardNumber,resourceName,PermissionStatus.DENIED);
+        if (cardResourceList.contains(resource) || checkCardGroupInResource) {
+            permissionDTO = new PermissionDTO(checkedCardNumber, resourceName, PermissionStatus.GRANTED);
+        } else {
+            permissionDTO = new PermissionDTO(checkedCardNumber, resourceName, PermissionStatus.DENIED);
         }
 
         return permissionDTO;

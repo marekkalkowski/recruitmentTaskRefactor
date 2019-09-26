@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping(value = "/api/resources")
 public class ResourceController {
 
-
     @Autowired
     private ResourceDao resourceDao;
 
@@ -25,7 +24,6 @@ public class ResourceController {
 
     @Value("${resource.min.length}")
     private String resourceMinLength;
-
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Resource> getAllGResources() {
@@ -61,7 +59,7 @@ public class ResourceController {
         long id = Long.valueOf(resourceId);
 
         if (resourceDao.findById(id) == null) {
-            throw new NotFoundException(String.format("Resource with id %s not found",resourceId));
+            throw new NotFoundException(String.format("Resource with id %s not found", resourceId));
         }
 
         Resource resource = resourceDao.findById(id);
@@ -72,7 +70,7 @@ public class ResourceController {
     @DeleteMapping(value = "/{resourceId}")
     public String deleteResource(@PathVariable("resourceId") int resourceId) {
         if (resourceDao.findById(resourceId) == null) {
-            throw new NotFoundException(String.format("Resource with id %s not found",resourceId));
+            throw new NotFoundException(String.format("Resource with id %s not found", resourceId));
         }
 
         resourceDao.delete(resourceId);

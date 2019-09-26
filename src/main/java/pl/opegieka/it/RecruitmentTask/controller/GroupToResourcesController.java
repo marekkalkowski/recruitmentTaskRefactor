@@ -2,8 +2,12 @@ package pl.opegieka.it.RecruitmentTask.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.opegieka.it.RecruitmentTask.Model.*;
-import pl.opegieka.it.RecruitmentTask.dao.*;
+import pl.opegieka.it.RecruitmentTask.Model.GroupToResourceDTO;
+import pl.opegieka.it.RecruitmentTask.Model.PermissionGroup;
+import pl.opegieka.it.RecruitmentTask.Model.Resource;
+import pl.opegieka.it.RecruitmentTask.dao.GroupToResourceDao;
+import pl.opegieka.it.RecruitmentTask.dao.PermissionGroupDao;
+import pl.opegieka.it.RecruitmentTask.dao.ResourceDao;
 import pl.opegieka.it.RecruitmentTask.exception.AllreadyExistException;
 import pl.opegieka.it.RecruitmentTask.exception.NotFoundException;
 import pl.opegieka.it.RecruitmentTask.service.RegexService;
@@ -12,21 +16,20 @@ import pl.opegieka.it.RecruitmentTask.service.RegexService;
 @RequestMapping(value = "/api/grouptoresource")
 public class GroupToResourcesController {
 
-      @Autowired
+    @Autowired
     private Resource resource;
 
     @Autowired
     private ResourceDao resourceDao;
 
     @Autowired
-    PermissionGroup permissionGroup;
+    private PermissionGroup permissionGroup;
 
     @Autowired
-    PermissionGroupDao permissionGroupDao;
+    private PermissionGroupDao permissionGroupDao;
 
     @Autowired
-    GroupToResourceDao groupToResourceDao;
-
+    private GroupToResourceDao groupToResourceDao;
 
     @Autowired
     private RegexService regexService;
@@ -34,7 +37,7 @@ public class GroupToResourcesController {
     @PostMapping(value = "/{groupId}/{resourceId}",
             produces = {"application/json"})
     public GroupToResourceDTO addGroupToResource(@PathVariable("groupId") String groupId,
-                                               @PathVariable("resourceId") String resourceId) {
+                                                 @PathVariable("resourceId") String resourceId) {
 
         checkNumberFormat(groupId, "Group id must be integer!");
         checkNumberFormat(resourceId, "Resource id must be integer!");
@@ -52,7 +55,7 @@ public class GroupToResourcesController {
             throw new NotFoundException("Resource not found");
         }
 
-        int test =groupToResourceDao.findIfExist(checkedGroupId, checkedResourceId);
+        int test = groupToResourceDao.findIfExist(checkedGroupId, checkedResourceId);
         if (groupToResourceDao.findIfExist(checkedGroupId, checkedResourceId) == 1) {
             throw new AllreadyExistException(String.format("Group %s is already in resource: %s", permissionGroup.getGroupName(), resource.getResourceName()));
         }
@@ -60,14 +63,14 @@ public class GroupToResourcesController {
         permissionGroup.addResource(resource);
         permissionGroupDao.update(permissionGroup);
 
-       GroupToResourceDTO groupToResourceDTO = new GroupToResourceDTO(checkedGroupId, checkedResourceId);
+        GroupToResourceDTO groupToResourceDTO = new GroupToResourceDTO(checkedGroupId, checkedResourceId);
         return groupToResourceDTO;
     }
 
     @DeleteMapping(value = "/{groupId}/{resourceId}",
             produces = {"application/json"})
     public String deleteGroupFromResource(@PathVariable("groupId") String groupId,
-                                      @PathVariable("resourceId") String resourceId) {
+                                          @PathVariable("resourceId") String resourceId) {
 
         checkNumberFormat(groupId, "Group id must be integer!");
         checkNumberFormat(resourceId, "Resource id must be integer!");

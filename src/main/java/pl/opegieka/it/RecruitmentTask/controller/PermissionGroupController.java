@@ -9,7 +9,6 @@ import pl.opegieka.it.RecruitmentTask.exception.AllreadyExistException;
 import pl.opegieka.it.RecruitmentTask.exception.NotFoundException;
 import pl.opegieka.it.RecruitmentTask.service.RegexService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -24,7 +23,6 @@ public class PermissionGroupController {
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-
     public List<PermissionGroup> getAllGroups() {
         return permissionGroupDao.findAll();
     }
@@ -56,7 +54,7 @@ public class PermissionGroupController {
         long id = Long.valueOf(groupId);
 
         if (permissionGroupDao.findById(id) == null) {
-            throw new NotFoundException(String.format("Group with id %s not found",groupId));
+            throw new NotFoundException(String.format("Group with id %s not found", groupId));
         }
 
         PermissionGroup permissionGroup = permissionGroupDao.findById(id);
@@ -67,7 +65,7 @@ public class PermissionGroupController {
     @DeleteMapping(value = "/{groupId}")
     public String deleteGroup(@PathVariable("groupId") int groupId) {
         if (permissionGroupDao.findById(groupId) == null) {
-            throw new NotFoundException(String.format("Group with id %s not found",groupId));
+            throw new NotFoundException(String.format("Group with id %s not found", groupId));
         }
 
         permissionGroupDao.delete(groupId);

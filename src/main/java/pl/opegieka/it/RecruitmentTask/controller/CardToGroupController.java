@@ -2,8 +2,13 @@ package pl.opegieka.it.RecruitmentTask.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.opegieka.it.RecruitmentTask.Model.*;
-import pl.opegieka.it.RecruitmentTask.dao.*;
+import pl.opegieka.it.RecruitmentTask.Model.Card;
+import pl.opegieka.it.RecruitmentTask.Model.CardToGroupDTO;
+import pl.opegieka.it.RecruitmentTask.Model.CardToResourceDTO;
+import pl.opegieka.it.RecruitmentTask.Model.PermissionGroup;
+import pl.opegieka.it.RecruitmentTask.dao.CardDao;
+import pl.opegieka.it.RecruitmentTask.dao.CardToPermisionGroupDao;
+import pl.opegieka.it.RecruitmentTask.dao.PermissionGroupDao;
 import pl.opegieka.it.RecruitmentTask.exception.AllreadyExistException;
 import pl.opegieka.it.RecruitmentTask.exception.NotFoundException;
 import pl.opegieka.it.RecruitmentTask.service.RegexService;

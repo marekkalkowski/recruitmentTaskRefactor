@@ -9,46 +9,42 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class RestExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(NotFoundException exc){
+    public ResponseEntity<ErrorResponse> handleException(NotFoundException exc) {
 
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(),
                 exc.getMessage(),
                 System.currentTimeMillis());
 
-        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(NumberFormatException exc){
+    public ResponseEntity<ErrorResponse> handleException(NumberFormatException exc) {
 
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
                 exc.getMessage(),
                 System.currentTimeMillis());
 
-        return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(AllreadyExistException exc){
+    public ResponseEntity<ErrorResponse> handleException(AllreadyExistException exc) {
 
         ErrorResponse error = new ErrorResponse(HttpStatus.FORBIDDEN.value(),
                 exc.getMessage(),
                 System.currentTimeMillis());
 
-        return new ResponseEntity<>(error,HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(Exception exc){
+    public ResponseEntity<ErrorResponse> handleException(Exception exc) {
 
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
                 exc.getMessage(),
                 System.currentTimeMillis());
 
-        return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-
-
-
 }

@@ -2,8 +2,12 @@ package pl.opegieka.it.RecruitmentTask.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.opegieka.it.RecruitmentTask.Model.*;
-import pl.opegieka.it.RecruitmentTask.dao.*;
+import pl.opegieka.it.RecruitmentTask.Model.Card;
+import pl.opegieka.it.RecruitmentTask.Model.CardToResourceDTO;
+import pl.opegieka.it.RecruitmentTask.Model.Resource;
+import pl.opegieka.it.RecruitmentTask.dao.CardDao;
+import pl.opegieka.it.RecruitmentTask.dao.CardToResourceDao;
+import pl.opegieka.it.RecruitmentTask.dao.ResourceDao;
 import pl.opegieka.it.RecruitmentTask.exception.AllreadyExistException;
 import pl.opegieka.it.RecruitmentTask.exception.NotFoundException;
 import pl.opegieka.it.RecruitmentTask.service.RegexService;
@@ -54,7 +58,7 @@ public class CardToResourceController {
             throw new NotFoundException("Resource not found");
         }
 
-        int test =cardToResourceDao.findIfExist(checkedCardId, checkedResourceId);
+        int test = cardToResourceDao.findIfExist(checkedCardId, checkedResourceId);
         if (cardToResourceDao.findIfExist(checkedCardId, checkedResourceId) == 1) {
             throw new AllreadyExistException(String.format("Card %s is already in resource: %s", card.getCardNumber(), resource.getResourceName()));
         }
@@ -69,7 +73,7 @@ public class CardToResourceController {
     @DeleteMapping(value = "/{cardId}/{resourceId}",
             produces = {"application/json"})
     public String deleteCardFromResource(@PathVariable("cardId") String cardId,
-                                      @PathVariable("resourceId") String resourceId) {
+                                         @PathVariable("resourceId") String resourceId) {
 
         checkNumberFormat(cardId, "Card id must be integer!");
         checkNumberFormat(resourceId, "Resource id must be integer!");
