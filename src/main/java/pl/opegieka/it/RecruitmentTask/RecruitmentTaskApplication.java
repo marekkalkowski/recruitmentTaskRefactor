@@ -9,5 +9,8 @@ public class RecruitmentTaskApplication {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(RecruitmentTaskApplication.class, args);
+
+
+        System.out.println(RecruitmentTaskApplication.class.getPackage().getImplementationVersion());
     }
 }

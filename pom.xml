@@ -18,6 +18,10 @@
 		<java.version>11</java.version>
 	</properties>
 
+	<scm>
+		<tag>@{project.verison}</tag>
+	</scm>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -97,6 +101,8 @@
 				<release>11</release>
 			</configuration>
 		</plugin>
+
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -119,6 +125,20 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<goals>pre-integration-test</goals>
+					<preparationGoals>package</preparationGoals>
+					<allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+					<tagNameFormat>@{project.version}</tagNameFormat>
+					<remoteTagging>false</remoteTagging>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
